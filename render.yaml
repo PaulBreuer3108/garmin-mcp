@@ -1,0 +1,17 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: garmin-mcp
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: GARMIN_PERSONAL_API_KEY
+        sync: false # wird im Render-Dashboard eingetragen, nie im Repo
+      - key: MCP_SECRET
+        generateValue: true
