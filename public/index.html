@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Road to Maastricht</title>
+<meta name="description" content="Trainingsfortschritt für den IRONMAN 70.3 Maastricht-Limburg">
+<meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="70.3">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="login" class="screen" hidden>
+  <form id="login-form" class="card login">
+    <h1>Road to Maastricht</h1>
+    <p class="muted">Bitte einmal das App-Passwort eingeben. Danach bleibt dieses Gerät angemeldet.</p>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Passwort" required>
+    <button type="submit" class="primary">Anmelden</button>
+    <p id="login-error" class="error" role="alert"></p>
+  </form>
+</div>
+
+<main id="main" hidden>
+  <header class="top">
+    <div>
+      <div class="eyebrow" id="race-name">IRONMAN 70.3 Maastricht-Limburg</div>
+      <div class="hero"><span id="days-left">–</span> <span class="hero-unit">Tage</span></div>
+      <div class="muted" id="race-sub"></div>
+    </div>
+    <button id="refresh" class="primary refresh" aria-label="Daten aktualisieren">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Aktualisieren</span>
+    </button>
+  </header>
+  <div id="status" class="status" role="status"></div>
+
+  <section class="card" id="week-card">
+    <div class="card-head">
+      <h2 id="week-title">Diese Woche</h2>
+      <span class="pill" id="week-phase"></span>
+    </div>
+    <div id="week-bars" class="bars"></div>
+    <div id="week-plan" class="plan-list"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2>Stunden pro Woche</h2><span class="muted small">Ist gegen Plan</span></div>
+    <div class="legend" id="legend-weeks"></div>
+    <div class="chart" id="chart-weeks"></div>
+  </section>
+
+  <section class="card">
+    <h2>Trends</h2>
+    <div class="grid2">
+      <div><h3>Laufen, km pro Woche</h3><div class="chart small-chart" id="chart-run"></div></div>
+      <div><h3>Rad, Stunden pro Woche</h3><div class="chart small-chart" id="chart-bike"></div></div>
+      <div><h3>Schwimmen, Meter pro Woche</h3><div class="chart small-chart" id="chart-swim"></div></div>
+      <div><h3>HRV über Nacht, ms</h3><div class="chart small-chart" id="chart-hrv"></div></div>
+      <div><h3>Ruhepuls, Schläge/min</h3><div class="chart small-chart" id="chart-rhr"></div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Letzte Einheiten</h2>
+    <ul id="recent" class="recent"></ul>
+  </section>
+
+  <footer class="foot">
+    <span id="stamp" class="muted small"></span>
+    <button id="logout" class="link">Abmelden</button>
+  </footer>
+</main>
+<div id="tip" class="tip" hidden></div>
+<script src="app.js" defer></script>
+</body>
+</html>
