@@ -15,3 +15,5 @@ services:
         sync: false # wird im Render-Dashboard eingetragen, nie im Repo
       - key: MCP_SECRET
         generateValue: true
+      - key: APP_PASSWORD
+        sync: false # Passwort für die Fortschritts-App unter /app, im Render-Dashboard eintragen

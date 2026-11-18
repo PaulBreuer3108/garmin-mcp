@@ -5,6 +5,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { createMcpExpressApp } from "@modelcontextprotocol/sdk/server/express.js";
 import { GarminClient, DEFAULT_BASE_URL } from "./garmin.js";
 import { registerTools } from "./tools.js";
+import { registerApp } from "./app.js";
 
 const apiKey = process.env.GARMIN_PERSONAL_API_KEY ?? "";
 const secret = process.env.MCP_SECRET ?? "";
@@ -62,6 +63,17 @@ app.all("/mcp/:secret", async (req: Request, res: Response) => {
     }
   }
 });
+
+// Fortschritts-App unter /app, nur mit gesetztem APP_PASSWORD.
+const appPassword = process.env.APP_PASSWORD ?? "";
+if (appPassword.length >= 8) {
+  registerApp(app, garmin, { password: appPassword, signingSecret: secret });
+} else {
+  console.warn("APP_PASSWORD fehlt oder ist kürzer als 8 Zeichen: die Fortschritts-App unter /app ist abgeschaltet.");
+  app.use("/app", (_req: Request, res: Response) => {
+    res.status(503).type("text/plain; charset=utf-8").send("Die App ist noch nicht eingerichtet: APP_PASSWORD bei Render eintragen (mindestens 8 Zeichen).");
+  });
+}
 
 app.listen(port, () => {
   console.log(`garmin-mcp läuft auf Port ${port}`);

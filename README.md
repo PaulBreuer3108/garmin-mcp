@@ -29,12 +29,29 @@ Quellen: [Garmin Personal API](https://developer.garmin.com/gc-developer-program
 
 Zeiträume sind auf 31 Tage pro Abruf begrenzt, damit die Antworten in Claudes Kontext passen. Alle Tools sind als `readOnly` markiert. Schreibzugriffe auf Garmin gibt es nicht.
 
+## Fortschritts-App (Handy)
+
+Unter `https://<dein-host>/app/` läuft eine kleine Web-App für den Trainingsfortschritt Richtung IRONMAN 70.3 Maastricht (5.9.2027):
+
+- Countdown, aktuelle Planwoche und Phase
+- Soll/Ist der Woche für Schwimmen, Rad und Laufen gegen den 41-Wochen-Plan (`src/plan.ts`)
+- Stunden pro Woche (Ist gegen Plan), Trends für Lauf-km, Rad-Stunden, Schwimm-Meter, HRV und Ruhepuls
+- die letzten Einheiten und ein Button **Aktualisieren**, der sofort frisch bei Garmin abruft
+
+Die Daten werden live von Garmin geholt und 30 Minuten im Speicher gehalten. Es gibt keine Datenbank. Der Garmin-Key bleibt auf dem Server.
+Die App ist mit `APP_PASSWORD` geschützt. Nach dem ersten Login bleibt das Gerät 180 Tage angemeldet (signiertes, HttpOnly-Cookie). Wer `APP_PASSWORD` ändert, meldet alle Geräte ab.
+
+**Auf den Homescreen:** iPhone: Seite in Safari öffnen → Teilen → „Zum Home-Bildschirm“. Android: in Chrome Menü → „App installieren“ bzw. „Zum Startbildschirm hinzufügen“.
+
+Die Stunden je Sportart im Plan sind Richtwerte: Schwimmen, langes Rad und langer Lauf stehen im Plan, die restlichen Wochenstunden sind auf die Kickr-Einheit (Mi) und den Lauf (Do) verteilt. Kraft zählt zur Gesamtzeit, nicht zu Rad oder Lauf. Gehen und Wandern zählen nicht mit.
+
 ## Umgebungsvariablen
 
 | Variable | Pflicht | Bedeutung |
 |---|---|---|
 | `GARMIN_PERSONAL_API_KEY` | ja | Dein persönlicher Garmin API Key. **Nur beim Hosting eintragen, nie committen oder in einen Chat kopieren.** |
 | `MCP_SECRET` | ja | Mindestens 24 Zeichen Zufall (z. B. `openssl rand -hex 32`). Wird Teil der Connector-URL und schützt den Server. |
+| `APP_PASSWORD` | für `/app` | Passwort der Fortschritts-App, mindestens 8 Zeichen. Ohne diese Variable ist `/app` abgeschaltet, der MCP-Server läuft trotzdem. |
 | `PORT` | nein | Standard 3000 (Render setzt ihn selbst). |
 
 ## Hosting auf Render (empfohlen, kostenlos)
